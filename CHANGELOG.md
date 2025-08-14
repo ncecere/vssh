@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Future features will be listed here
 
+## [0.1.4] - 2025-01-13
+
+### Fixed
+- Fixed release workflow cache conflicts causing 60+ build errors
+- Used unique cache keys per build matrix combination to prevent conflicts
+- Each build job now has isolated Go module cache
+- Fixed tar extraction conflicts that were causing "Cannot open: File exists" errors
+- Improved build isolation to prevent parallel job interference
+
 ## [0.1.3] - 2025-01-13
 
 ### Fixed
