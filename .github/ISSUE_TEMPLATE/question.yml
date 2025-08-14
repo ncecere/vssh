@@ -1,0 +1,125 @@
+name: Question / Support
+description: Ask a question or get help with vssh
+title: "[Question]: "
+labels: ["question", "support"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reaching out! Please provide as much detail as possible so we can help you effectively.
+        
+        **Before submitting**: Please check the [documentation](https://github.com/ncecere/vssh#documentation) and [existing issues](https://github.com/ncecere/vssh/issues) to see if your question has already been answered.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Question Category
+      description: What type of question is this?
+      options:
+        - Installation / Setup
+        - Configuration
+        - Authentication (Vault setup)
+        - SSH Connection Issues
+        - Certificate Management
+        - Usage / How-to
+        - Troubleshooting
+        - Best Practices
+        - Integration with other tools
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: What would you like to know?
+      placeholder: Please describe your question or what you're trying to accomplish.
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context / Background
+      description: Provide context about your setup and what you're trying to achieve
+      placeholder: |
+        - What are you trying to accomplish?
+        - What is your current setup?
+        - What have you tried so far?
+        - Any relevant background information
+
+  - type: input
+    id: version
+    attributes:
+      label: vssh Version
+      description: What version of vssh are you using?
+      placeholder: "v0.1.5 (run 'vssh version' to check)"
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      description: What operating system are you using?
+      options:
+        - Linux (AMD64)
+        - Linux (ARM64)
+        - macOS (Intel)
+        - macOS (Apple Silicon)
+        - Windows (AMD64)
+        - Windows (ARM64)
+        - Other (please specify in description)
+
+  - type: textarea
+    id: config
+    attributes:
+      label: Configuration (Optional)
+      description: Share relevant parts of your configuration (remove sensitive information)
+      placeholder: |
+        If relevant to your question, share parts of your ~/.config/vssh/config.yaml
+        (Please remove sensitive values like addresses, usernames, tokens, etc.)
+      render: yaml
+
+  - type: textarea
+    id: commands
+    attributes:
+      label: Commands / Output (Optional)
+      description: Share relevant commands and their output
+      placeholder: |
+        If relevant, share the commands you're running and any output or error messages
+        (Please remove sensitive information like tokens, passwords, server names, etc.)
+      render: shell
+
+  - type: textarea
+    id: documentation
+    attributes:
+      label: Documentation Checked
+      description: What documentation have you already reviewed?
+      placeholder: |
+        Please list what documentation you've already checked:
+        - [ ] README.md
+        - [ ] CONFIG.md
+        - [ ] DEVELOPMENT.md
+        - [ ] Existing GitHub issues
+        - [ ] Other (please specify)
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Information
+      description: Any other information that might be helpful
+      placeholder: Screenshots, error messages, related issues, etc.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Checklist
+      description: Please confirm the following
+      options:
+        - label: I have searched existing issues and documentation
+          required: true
+        - label: I have removed sensitive information from any shared configuration or output
+          required: true
+        - label: This is a question/support request, not a bug report or feature request
+          required: true

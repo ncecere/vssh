@@ -506,13 +506,39 @@ go build -o vssh
 ./vssh init
 ```
 
+## Documentation
+
+- **[README.md](README.md)** - This file, comprehensive user guide
+- **[CONFIG.md](CONFIG.md)** - Detailed configuration reference
+- **[DEVELOPMENT.md](DEVELOPMENT.md)** - Developer setup and build instructions
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guidelines for contributors
+- **[SECURITY.md](SECURITY.md)** - Security policy and vulnerability reporting
+- **[CHANGELOG.md](CHANGELOG.md)** - Version history and release notes
+
 ## Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
+
+- Setting up the development environment
+- Code style guidelines
+- Testing requirements
+- Pull request process
+
+Quick start for contributors:
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+3. Make your changes and add tests
+4. Run tests (`make test`)
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+## Security
+
+Security is important to us. If you discover a security vulnerability, please see our [Security Policy](SECURITY.md) for responsible disclosure guidelines.
+
+For general security best practices when using vssh, refer to the Security Considerations section above and the [Security Policy](SECURITY.md).
 
 ## License
 
@@ -521,8 +547,26 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 - **Issues**: Report bugs and request features on [GitHub Issues](https://github.com/ncecere/vssh/issues)
-- **Documentation**: Additional documentation available in the repository
+- **Security**: Report security vulnerabilities via our [Security Policy](SECURITY.md)
+- **Documentation**: Comprehensive documentation available in the repository
 - **Community**: Join discussions in [GitHub Discussions](https://github.com/ncecere/vssh/discussions)
+
+## Project Status
+
+- **Current Version**: v0.1.5
+- **Status**: Active development
+- **Stability**: Beta - suitable for testing and development environments
+- **Platform Support**: Linux, macOS, Windows (AMD64, ARM64)
+
+## Roadmap
+
+See [TASK.md](TASK.md) for current development tasks and [CHANGELOG.md](CHANGELOG.md) for version history.
+
+Upcoming features:
+- Enhanced error handling and user experience
+- Additional authentication methods
+- Performance optimizations
+- Integration tests
 
 ## Acknowledgments
 
@@ -530,3 +574,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Cobra](https://github.com/spf13/cobra) for the CLI framework
 - [Viper](https://github.com/spf13/viper) for configuration management
 - [Logrus](https://github.com/sirupsen/logrus) for structured logging
+- The Go community for excellent tooling and libraries

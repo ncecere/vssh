@@ -76,6 +76,16 @@
 - [x] Create comprehensive .gitignore - 2025-01-13
 - [x] Add CHANGELOG.md for version tracking - 2025-01-13
 - [x] Set up automated release creation - 2025-01-13
+- [x] Create and release v0.1.0 - 2025-01-13
+- [x] Fix unit tests for new design - 2025-01-13
+- [x] Fix CI workflow to only run on tags - 2025-01-13
+- [x] Create and release v0.1.1 - 2025-01-13
+- [x] Fix duplicate workflow runs on tag push - 2025-01-13
+- [x] Create and release v0.1.2 - 2025-01-13
+- [x] Fix release workflow build failures - 2025-01-13
+- [x] Create and release v0.1.3 - 2025-01-13
+- [x] Fix release workflow cache conflicts causing 60+ build errors - 2025-01-13
+- [x] Create and release v0.1.4 - 2025-01-13
 
 ## Discovered During Work
 (Tasks discovered during development will be added here)

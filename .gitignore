@@ -16,16 +16,20 @@
 
 # Go workspace file
 go.work
+go.work.sum
 
 # Build artifacts
 vssh
 vssh-*
 dist/
 build/
+bin/
 
 # Coverage reports
 coverage.out
 coverage.html
+coverage.txt
+*.cover
 
 # IDE files
 .vscode/
@@ -33,6 +37,8 @@ coverage.html
 *.swp
 *.swo
 *~
+.project
+.settings/
 
 # OS generated files
 .DS_Store
@@ -42,9 +48,11 @@ coverage.html
 .Trashes
 ehthumbs.db
 Thumbs.db
+desktop.ini
 
 # Logs
 *.log
+logs/
 
 # Runtime data
 pids
@@ -58,9 +66,11 @@ config.yml
 .env
 .env.local
 .env.*.local
+.envrc
 
-# Vault tokens
+# Vault tokens and auth
 .vault-token
+.vault-*
 
 # SSH keys and certificates
 *.pem
@@ -69,25 +79,59 @@ id_rsa*
 id_ed25519*
 id_ecdsa*
 vault_signed_*.pub
+*.crt
+*.csr
 
 # Temporary files
 tmp/
 temp/
 *.tmp
+*.temp
 
 # Archives
 *.tar.gz
 *.zip
 *.rar
+*.7z
 
 # Debug files
 debug
 *.debug
+__debug_bin
 
 # Profiling files
 *.prof
 *.pprof
+cpu.prof
+mem.prof
 
 # Local development
 local/
 dev/
+.local/
+
+# Documentation build artifacts
+docs/_build/
+site/
+
+# Release artifacts (handled by CI)
+release/
+artifacts/
+
+# Cache directories
+.cache/
+node_modules/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Lock files (except go.sum which should be committed)
+package-lock.json
+yarn.lock
+Pipfile.lock
+
+# Editor specific
+.vimrc.local
+.nvimrc.local
