@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Future features will be listed here
 
+## [0.1.2] - 2025-01-13
+
+### Fixed
+- Fixed duplicate workflow runs when pushing version tags
+- CI workflow now only runs on pull requests
+- Release workflow handles all tag-based builds and testing
+
 ## [0.1.1] - 2025-01-13
 
 ### Fixed
