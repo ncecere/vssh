@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Future features will be listed here
 
+## [0.1.1] - 2025-01-13
+
+### Fixed
+- Fixed CI workflow to only run on tags instead of every commit
+- Fixed unit tests to match new design where username is used as Vault role
+
 ## [0.1.0] - 2025-01-13
 
 ### Added
