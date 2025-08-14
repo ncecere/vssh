@@ -35,12 +35,12 @@ Download the appropriate binary for your platform from the [latest release](http
 #### Linux
 ```bash
 # AMD64 (Intel/AMD 64-bit)
-curl -L https://github.com/ncecere/vssh/releases/latest/download/vssh-v1.0.0-linux-amd64 -o vssh
+curl -L https://github.com/ncecere/vssh/releases/latest/download/vssh-v0.1.0-linux-amd64 -o vssh
 chmod +x vssh
 sudo mv vssh /usr/local/bin/
 
 # ARM64 (ARM 64-bit)
-curl -L https://github.com/ncecere/vssh/releases/latest/download/vssh-v1.0.0-linux-arm64 -o vssh
+curl -L https://github.com/ncecere/vssh/releases/latest/download/vssh-v0.1.0-linux-arm64 -o vssh
 chmod +x vssh
 sudo mv vssh /usr/local/bin/
 ```
@@ -48,12 +48,12 @@ sudo mv vssh /usr/local/bin/
 #### macOS
 ```bash
 # Intel Mac
-curl -L https://github.com/ncecere/vssh/releases/latest/download/vssh-v1.0.0-darwin-amd64 -o vssh
+curl -L https://github.com/ncecere/vssh/releases/latest/download/vssh-v0.1.0-darwin-amd64 -o vssh
 chmod +x vssh
 sudo mv vssh /usr/local/bin/
 
 # Apple Silicon (M1/M2)
-curl -L https://github.com/ncecere/vssh/releases/latest/download/vssh-v1.0.0-darwin-arm64 -o vssh
+curl -L https://github.com/ncecere/vssh/releases/latest/download/vssh-v0.1.0-darwin-arm64 -o vssh
 chmod +x vssh
 sudo mv vssh /usr/local/bin/
 ```
@@ -61,10 +61,10 @@ sudo mv vssh /usr/local/bin/
 #### Windows
 ```powershell
 # AMD64 (Intel/AMD 64-bit)
-Invoke-WebRequest -Uri "https://github.com/ncecere/vssh/releases/latest/download/vssh-v1.0.0-windows-amd64.exe" -OutFile "vssh.exe"
+Invoke-WebRequest -Uri "https://github.com/ncecere/vssh/releases/latest/download/vssh-v0.1.0-windows-amd64.exe" -OutFile "vssh.exe"
 
 # ARM64 (ARM 64-bit)
-Invoke-WebRequest -Uri "https://github.com/ncecere/vssh/releases/latest/download/vssh-v1.0.0-windows-arm64.exe" -OutFile "vssh.exe"
+Invoke-WebRequest -Uri "https://github.com/ncecere/vssh/releases/latest/download/vssh-v0.1.0-windows-arm64.exe" -OutFile "vssh.exe"
 
 # Add to PATH (optional)
 $env:PATH += ";$(Get-Location)"
@@ -79,7 +79,7 @@ If you have Go installed, you can install vssh directly:
 go install github.com/ncecere/vssh@latest
 
 # Install specific version
-go install github.com/ncecere/vssh@v1.0.0
+go install github.com/ncecere/vssh@v0.1.0
 ```
 
 ### GitHub CLI
@@ -91,7 +91,7 @@ If you have GitHub CLI installed:
 gh release download -R ncecere/vssh
 
 # Download specific version
-gh release download v1.0.0 -R ncecere/vssh
+gh release download v0.1.0 -R ncecere/vssh
 ```
 
 ### Build from Source
