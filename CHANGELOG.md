@@ -10,6 +10,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Future features will be listed here
 
+## [0.1.6] - 2025-01-13
+
+### Added
+- MIT License for open source compliance
+- Comprehensive contributing guidelines (CONTRIBUTING.md)
+- Security policy and vulnerability reporting (SECURITY.md)
+- GitHub issue templates for bug reports, feature requests, and questions
+- Pull request template with detailed checklist
+- EditorConfig for consistent code formatting across editors
+- Enhanced project documentation and contributor experience
+
+### Changed
+- Updated .gitignore with comprehensive exclusions for Go projects
+- Enhanced README.md with links to all documentation and improved structure
+- Improved project professionalism and maintainability
+
 ## [0.1.5] - 2025-01-13
 
 ### Fixed
