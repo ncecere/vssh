@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Future features will be listed here
 
+## [0.1.3] - 2025-01-13
+
+### Fixed
+- Fixed release workflow build failures
+- Removed problematic GitHub Packages publishing job
+- Added binary cleanup to prevent file conflicts
+- Used unique artifact names to avoid naming collisions
+- Simplified workflow for better reliability
+
 ## [0.1.2] - 2025-01-13
 
 ### Fixed
