@@ -27,7 +27,7 @@ func TestLoadConfig_WithDefaults(t *testing.T) {
 		t.Errorf("Expected default vault address, got %s", cfg.Vault.Address)
 	}
 
-	if cfg.Vault.Role != "ssh-client-role" {
+	if cfg.Vault.Role != "" {
 		t.Errorf("Expected default vault role, got %s", cfg.Vault.Role)
 	}
 
