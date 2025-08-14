@@ -14,21 +14,168 @@ A Go CLI tool that signs SSH keys with HashiCorp Vault and uses signed certifica
 
 ## Installation
 
-### From Source
+vssh provides multiple installation methods to suit different preferences and environments.
+
+### Quick Install (Recommended)
+
+#### Linux and macOS
+```bash
+curl -fsSL https://raw.githubusercontent.com/ncecere/vssh/main/install.sh | bash
+```
+
+#### Windows (PowerShell)
+```powershell
+iwr -useb https://raw.githubusercontent.com/ncecere/vssh/main/install.ps1 | iex
+```
+
+### Manual Download
+
+Download the appropriate binary for your platform from the [latest release](https://github.com/ncecere/vssh/releases/latest):
+
+#### Linux
+```bash
+# AMD64 (Intel/AMD 64-bit)
+curl -L https://github.com/ncecere/vssh/releases/latest/download/vssh-v1.0.0-linux-amd64 -o vssh
+chmod +x vssh
+sudo mv vssh /usr/local/bin/
+
+# ARM64 (ARM 64-bit)
+curl -L https://github.com/ncecere/vssh/releases/latest/download/vssh-v1.0.0-linux-arm64 -o vssh
+chmod +x vssh
+sudo mv vssh /usr/local/bin/
+```
+
+#### macOS
+```bash
+# Intel Mac
+curl -L https://github.com/ncecere/vssh/releases/latest/download/vssh-v1.0.0-darwin-amd64 -o vssh
+chmod +x vssh
+sudo mv vssh /usr/local/bin/
+
+# Apple Silicon (M1/M2)
+curl -L https://github.com/ncecere/vssh/releases/latest/download/vssh-v1.0.0-darwin-arm64 -o vssh
+chmod +x vssh
+sudo mv vssh /usr/local/bin/
+```
+
+#### Windows
+```powershell
+# AMD64 (Intel/AMD 64-bit)
+Invoke-WebRequest -Uri "https://github.com/ncecere/vssh/releases/latest/download/vssh-v1.0.0-windows-amd64.exe" -OutFile "vssh.exe"
+
+# ARM64 (ARM 64-bit)
+Invoke-WebRequest -Uri "https://github.com/ncecere/vssh/releases/latest/download/vssh-v1.0.0-windows-arm64.exe" -OutFile "vssh.exe"
+
+# Add to PATH (optional)
+$env:PATH += ";$(Get-Location)"
+```
+
+### Go Install
+
+If you have Go installed, you can install vssh directly:
+
+```bash
+# Install latest version
+go install github.com/ncecere/vssh@latest
+
+# Install specific version
+go install github.com/ncecere/vssh@v1.0.0
+```
+
+### GitHub CLI
+
+If you have GitHub CLI installed:
+
+```bash
+# Download latest release
+gh release download -R ncecere/vssh
+
+# Download specific version
+gh release download v1.0.0 -R ncecere/vssh
+```
+
+### Build from Source
+
+For developers who want to build from source:
 
 ```bash
 git clone https://github.com/ncecere/vssh.git
 cd vssh
+go mod download
 go build -o vssh
 sudo mv vssh /usr/local/bin/
 ```
 
+### Installation Verification
+
+After installation, verify vssh is working:
+
+```bash
+# Check version
+vssh version
+
+# Show help
+vssh --help
+
+# Initialize configuration
+vssh init
+```
+
 ### Prerequisites
 
-- Go 1.19 or later
 - Access to a HashiCorp Vault server with SSH secrets engine enabled
 - SSH client installed on your system
-- SSH key pair generated (`ssh-keygen -t rsa`)
+- SSH key pair generated (`ssh-keygen -t rsa` or `ssh-keygen -t ed25519`)
+
+### Upgrading
+
+To upgrade to a newer version:
+
+#### Using Install Scripts
+```bash
+# Linux/macOS
+curl -fsSL https://raw.githubusercontent.com/ncecere/vssh/main/install.sh | bash
+
+# Windows
+iwr -useb https://raw.githubusercontent.com/ncecere/vssh/main/install.ps1 | iex
+```
+
+#### Using Go Install
+```bash
+go install github.com/ncecere/vssh@latest
+```
+
+#### Manual Upgrade
+Download the new binary and replace the existing one following the manual installation steps above.
+
+### Uninstallation
+
+#### Linux/macOS
+```bash
+# Remove binary
+sudo rm /usr/local/bin/vssh
+
+# Remove configuration (optional)
+rm -rf ~/.config/vssh
+
+# Remove cached certificates (optional)
+rm -f ~/.ssh/vault_signed_*.pub
+```
+
+#### Windows
+```powershell
+# Remove binary (adjust path as needed)
+Remove-Item "$env:LOCALAPPDATA\vssh\bin\vssh.exe"
+
+# Remove from PATH if added manually
+# Edit environment variables through System Properties
+
+# Remove configuration (optional)
+Remove-Item -Recurse "$env:USERPROFILE\.config\vssh"
+
+# Remove cached certificates (optional)
+Remove-Item "$env:USERPROFILE\.ssh\vault_signed_*.pub"
+```
 
 ## Quick Start
 

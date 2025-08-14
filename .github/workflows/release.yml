@@ -1,0 +1,247 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Cache Go modules
+        uses: actions/cache@v4
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Download dependencies
+        run: go mod download
+
+      - name: Run tests
+        run: go test -v ./...
+
+      - name: Run go vet
+        run: go vet ./...
+
+      - name: Run go fmt check
+        run: |
+          if [ "$(gofmt -s -l . | wc -l)" -gt 0 ]; then
+            echo "The following files are not formatted:"
+            gofmt -s -l .
+            exit 1
+          fi
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: test
+    strategy:
+      matrix:
+        include:
+          # Linux builds
+          - goos: linux
+            goarch: amd64
+            suffix: ""
+          - goos: linux
+            goarch: arm64
+            suffix: ""
+          # macOS builds
+          - goos: darwin
+            goarch: amd64
+            suffix: ""
+          - goos: darwin
+            goarch: arm64
+            suffix: ""
+          # Windows builds
+          - goos: windows
+            goarch: amd64
+            suffix: ".exe"
+          - goos: windows
+            goarch: arm64
+            suffix: ".exe"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Cache Go modules
+        uses: actions/cache@v4
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Download dependencies
+        run: go mod download
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Build binary
+        env:
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+          CGO_ENABLED: 0
+        run: |
+          # Build with version information
+          go build -ldflags "-s -w -X main.version=${{ steps.version.outputs.VERSION }} -X main.commit=${{ github.sha }} -X main.date=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            -o vssh-${{ steps.version.outputs.VERSION }}-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.suffix }}
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vssh-${{ steps.version.outputs.VERSION }}-${{ matrix.goos }}-${{ matrix.goarch }}
+          path: vssh-${{ steps.version.outputs.VERSION }}-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.suffix }}
+
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: Prepare release assets
+        run: |
+          mkdir -p ./release
+          find ./artifacts -name "vssh-*" -type f -exec cp {} ./release/ \;
+          ls -la ./release/
+
+      - name: Generate checksums
+        run: |
+          cd ./release
+          sha256sum * > checksums.txt
+          cat checksums.txt
+
+      - name: Create release notes
+        run: |
+          cat > release-notes.md << 'EOF'
+          # vssh ${{ steps.version.outputs.VERSION }}
+          
+          ## Installation
+          
+          ### Quick Install Scripts
+          
+          **Linux/macOS:**
+          ```bash
+          curl -fsSL https://raw.githubusercontent.com/ncecere/vssh/main/install.sh | bash
+          ```
+          
+          **Windows (PowerShell):**
+          ```powershell
+          iwr -useb https://raw.githubusercontent.com/ncecere/vssh/main/install.ps1 | iex
+          ```
+          
+          ### Manual Download
+          
+          Download the appropriate binary for your platform:
+          
+          - **Linux AMD64**: `vssh-${{ steps.version.outputs.VERSION }}-linux-amd64`
+          - **Linux ARM64**: `vssh-${{ steps.version.outputs.VERSION }}-linux-arm64`
+          - **macOS Intel**: `vssh-${{ steps.version.outputs.VERSION }}-darwin-amd64`
+          - **macOS Apple Silicon**: `vssh-${{ steps.version.outputs.VERSION }}-darwin-arm64`
+          - **Windows AMD64**: `vssh-${{ steps.version.outputs.VERSION }}-windows-amd64.exe`
+          - **Windows ARM64**: `vssh-${{ steps.version.outputs.VERSION }}-windows-arm64.exe`
+          
+          ### Go Install
+          
+          ```bash
+          go install github.com/ncecere/vssh@${{ steps.version.outputs.VERSION }}
+          ```
+          
+          ## Verification
+          
+          After installation, verify with:
+          ```bash
+          vssh --version
+          vssh init
+          ```
+          
+          ## What's Changed
+          
+          See the [CHANGELOG.md](https://github.com/ncecere/vssh/blob/main/CHANGELOG.md) for detailed changes.
+          
+          ## Documentation
+          
+          - [README.md](https://github.com/ncecere/vssh/blob/main/README.md) - User documentation
+          - [CONFIG.md](https://github.com/ncecere/vssh/blob/main/CONFIG.md) - Configuration reference
+          - [DEVELOPMENT.md](https://github.com/ncecere/vssh/blob/main/DEVELOPMENT.md) - Developer guide
+          EOF
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.VERSION }}
+          name: vssh ${{ steps.version.outputs.VERSION }}
+          body_path: release-notes.md
+          files: |
+            ./release/*
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+
+  publish:
+    name: Publish to GitHub Packages
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Configure Git for private modules
+        run: |
+          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+
+      - name: Set up Go proxy
+        run: |
+          go env -w GOPROXY=https://proxy.golang.org,direct
+          go env -w GOSUMDB=sum.golang.org
+
+      - name: Verify module
+        run: |
+          go mod verify
+          go mod tidy
+
+      - name: Test module can be fetched
+        run: |
+          # Test that the module can be downloaded
+          cd /tmp
+          go mod init test
+          go get github.com/ncecere/vssh@${{ github.ref_name }}

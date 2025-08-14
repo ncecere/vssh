@@ -18,7 +18,19 @@ import (
 var (
 	cfgFile string
 	cfg     *types.Config
+
+	// Version information
+	version = "dev"
+	commit  = "unknown"
+	date    = "unknown"
 )
+
+// SetVersionInfo sets the version information for the CLI
+func SetVersionInfo(v, c, d string) {
+	version = v
+	commit = c
+	date = d
+}
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -141,6 +153,17 @@ func Execute() error {
 
 func init() {
 	cobra.OnInitialize(initConfig)
+
+	// Add version command
+	rootCmd.AddCommand(&cobra.Command{
+		Use:   "version",
+		Short: "Print version information",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Printf("vssh %s\n", version)
+			fmt.Printf("Commit: %s\n", commit)
+			fmt.Printf("Built: %s\n", date)
+		},
+	})
 
 	// Global flags
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/vssh/config.yaml)")
