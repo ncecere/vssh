@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Future features will be listed here
 
+## [0.1.5] - 2025-01-13
+
+### Fixed
+- Disabled Go module caching for build jobs to eliminate tar extraction conflicts
+- Temporarily removed caching to prevent "Cannot open: File exists" errors in parallel builds
+- Kept caching enabled for test job since it runs in isolation
+- This should eliminate the 60+ tar extraction errors that persisted in v0.1.4
+
 ## [0.1.4] - 2025-01-13
 
 ### Fixed
